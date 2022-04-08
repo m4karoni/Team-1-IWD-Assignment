@@ -1,0 +1,241 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="edit_container">
+  <div class="col-md-2">
+    <a style="text-align: left; font-size: 24px; color: white;" name="btnBack" href="{% url 'patient_profile' %}">⬅ Profile Page</a>
+  </div>
+<div class="row gutters">
+<div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+<div class="card h-100">
+	<div class="card-body">
+		<div class="account-settings">
+			<div class="user-profile">
+				<div class="user-avatar">
+            <img src={{profile_pic_url}} id="display" width="200" />
+				</div>
+
+        {% if username == "" %}
+          <h5>
+            (Username not set)
+          </h5>
+        {% else %}
+          <h5>
+            {{username}}
+          </h5>
+        {% endif %}
+				<h6 class="user-email">{{email}}</h6>
+			</div>
+			<div>
+				<h5>Date of Birth</h5>
+        {% if dob == "" %}
+          <p>
+            (Not Set)
+          </p>
+        {% else %}
+          <p>
+            {{dob}}
+          </p>
+        {% endif %}
+			</div>
+      <div>
+        <h5>Gender</h5>
+        {% if gender == "" %}
+          <p>
+            (Not Set)
+          </p>
+        {% else %}
+          <p>
+            {{gender}}
+          </p>
+        {% endif %}
+      </div>
+      <div>
+        <h5>Blood Type</h5>
+        {% if blood_type == "" %}
+          <p>
+            (Not Set)
+          </p>
+        {% else %}
+          <p>
+            {{blood_type}}
+          </p>
+        {% endif %}
+      </div>
+      <div>
+        <h5>Height</h5>
+        {% if height_cm == 0 %}
+          <p>
+            (Not Set)
+          </p>
+        {% else %}
+          <p>
+            {{height_cm}} cm
+          </p>
+        {% endif %}
+      </div>
+      <div>
+        <h5>Weight</h5>
+        {% if weight_kg == 0 %}
+          <p>
+            (Not Set)
+          </p>
+        {% else %}
+          <p>
+            {{weight_kg}} kg
+          </p>
+        {% endif %}
+      </div>
+      <div>
+        <h5>Medical History</h5>
+        {% if medical_history == "" %}
+          <p>
+            (Not Set)
+          </p>
+        {% else %}
+          <p>
+            {{medical_history}}
+          </p>
+        {% endif %}
+      </div>
+		</div>
+	</div>
+</div>
+</div>
+<div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
+<div class="card h-100">
+	<div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+  		<div class="row gutters">
+  			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-bottom:20px;">
+  				<h6 class="mb-2 text-primary" style="font-size: 24px;">Update Details</h6>
+  			</div>
+        <br>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-bottom:20px">
+  				<div class="form-group">
+            <div class="user-avatar">
+              <img src={{profile_pic_url}} id="output" width="200" />
+    				</div>
+            <input type="file"accept="image/*" name="profile_pic" id="file"  onchange="loadFile(event)" style="display: none;"/>
+            <label for="file" style="cursor: pointer; color:blue; text-decoration: underline; font-size:10px;">Update Profile Picture</label>
+  				</div>
+  			</div>
+        <br>
+  			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+  				<div class="form-group">
+  					<label for="fullName">Full Name</label>
+            {% if not username == "" %}
+              <input type="text" class="form-control" name="fullName" placeholder="Enter Full Name" value="{{username}}">
+            {% else %}
+              <input type="text" class="form-control" name="fullName" placeholder="Enter Full Name">
+            {% endif %}
+  				</div>
+  			</div>
+        <br>
+  			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+  				<div class="form-group">
+  					<label for="dob">Date of Birth</label>
+            {% if not dob == "" %}
+              <input type="date" class="form-control" name="dob" placeholder="Enter Date of Birth" value="{{dob}}">
+            {% else %}
+              <input type="date" class="form-control" name="dob" placeholder="Enter Date of Birth">
+            {% endif %}
+  				</div>
+  			</div>
+  			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+  				<div class="form-group">
+  					<label for="gender">Gender</label>
+            {% if not gender == "" %}
+              <input list="gender" class="form-control" name="gender" placeholder="Enter Gender" value="{{gender}}">
+            {% else %}
+              <input list="gender" class="form-control" name="gender" placeholder="Enter Gender">
+            {% endif %}
+            <datalist id="gender">
+              <option value="Male">
+              <option value="Female">
+              <option value="Others">
+            </datalist>
+  				</div>
+  			</div>
+  			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+  				<div class="form-group">
+  					<label for="blood_type">Blood Type</label>
+            {% if not blood_type == "" %}
+              <input list="blood-type" class="form-control" name="blood_type" placeholder="Enter Blood Type" value="{{blood_type}}">
+            {% else %}
+              <input list="blood-type" class="form-control" name="blood_type" placeholder="Enter Blood Type">
+            {% endif %}
+            <datalist id="blood-type">
+              <option value="A+">
+              <option value="A-">
+              <option value="B+">
+              <option value="B-">
+              <option value="AB+">
+              <option value="AB-">
+              <option value="O+">
+              <option value="O-">
+              <option value="Not sure">
+            </datalist>
+  				</div>
+  			</div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+          <div class="form-group">
+            <label for="height_cm">Height (cm)</label>
+            {% if not height_cm == "" %}
+              <input type="text" class="form-control" name="height_cm" placeholder="Enter Height (cm)" value="{{height_cm}}">
+            {% else %}
+              <input type="text" class="form-control" name="height_cm" placeholder="Enter Height (cm)">
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+          <div class="form-group">
+              <label for="weight_kg">Weight (kg)</label>
+            {% if not clinic_location == "" %}
+              <input type="text" class="form-control" name="weight_kg" placeholder="Enter Weight (kg)" value="{{weight_kg}}">
+            {% else %}
+              <input type="text" class="form-control" name="weight_kg" placeholder="Enter Weight (kg)">
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-bottom:20px">
+          <div class="form-group">
+            <label for="medical_history">Medical History</label>
+              <input type="text" class="form-control" name="medical_history" placeholder="Enter Medical History" value="{{medical_history}}">
+          </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+          <div class="form-group">
+            <label for="password">Enter Password</label>
+            <input type="password" class="form-control" name="password" placeholder="Enter Password">
+          </div>
+        </div>
+  		</div>
+  		<div class="row gutters">
+  			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-bottom:20px">
+  				<div class="text-center">
+  					<button type="submit" name="btnUpdate"  class="button-edit-doctor-profile btn" style="display: flex; text-align: center;">Update Info</button>
+  				</div>
+  			</div>
+  		</div>
+    </form>
+	</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+
+  var loadFile = function(event) {
+  	var image = document.getElementById('output');
+  	image.src = URL.createObjectURL(event.target.files[0]);
+  };
+</script>
+
+{% endblock content %}

@@ -1,0 +1,340 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+  body {
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+  }
+</style>
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex align-items-center">
+  <div class="container">
+    <h1 style="color: white">Welcome to E-DOCTORS</h1>
+    {% if request.session.uid %}
+      {% if request.session.username == "" %}
+        <h2 style="color: white">Hi, {{request.session.email}}</h2>
+      {% else %}
+        <h2 style="color: white">Hi, {{request.session.username}}</h2>
+      {% endif %}
+    {% endif %}
+    <h2 style="color: white">We have tons of registered doctors ready to serve you!</h2>
+    <!-- <a href="#about" class="btn-get-started scrollto">Get Started</a> -->
+  </div>
+</section><!-- End Hero -->
+
+<main id="main">
+
+  <!-- ======= Why Us Section ======= -->
+  <section id="why-us" class="why-us">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-12 d-flex align-items-stretch">
+          <div class="content">
+            <h3>Why Choose E-DOCTORS?</h3>
+            <p>
+              At E-DOCTORS, we have hundreds of highly qualified doctors owning their clinics ready to serve you. We help you to find the nearest, most affordable, and best clinic doctors for you to consult your illnesses. You may schedule an appointment to visit to their clinics or have them to come over to your house.
+            </p>
+            <div class="text-center">
+              <a href="#faq" class="more-btn">Learn More <i class="bx bx-chevron-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Why Us Section -->
+
+
+  <!-- ======= About Section ======= -->
+  <section id="about" class="about">
+    <div class="container-fluid">
+      <div class="row">
+        <div style="background-image: url('/static/images/video.png'); background-size: 1200px 600px; background-repeat: no-repeat; background-position: center;" class=" col-lg-12 video-box d-flex justify-content-center align-items-stretch position-relative">
+            <a href="https://www.youtube.com/watch?v=NzPpWTMxPpI" class="glightbox play-btn mb-4"></a>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- End About Section -->
+
+
+  <!-- ======= Counts Section ======= -->
+   <section id="counts" class="counts">
+    <div class="container">
+      <div class="section-title">
+        <h2>Website Stats</h2>
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="count-box">
+              <i class="fas fa-user-md"></i>
+              <span data-purecounter-start="0" data-purecounter-end="{{count_doctor}}" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Doctors</p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
+            <div class="count-box">
+              <i class="fas fa-flask"></i>
+              <span data-purecounter-start="0" data-purecounter-end="{{count_speciality}}" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Speciality</p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+            <div class="count-box">
+              <i class="far fa-hospital"></i>
+              <span data-purecounter-start="0" data-purecounter-end="{{count_location}}" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Location</p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+            <div class="count-box">
+              <i class="fas fa-award"></i>
+              <span data-purecounter-start="0" data-purecounter-end="{{count_cert}}" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Certs</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- End Counts Section -->
+
+
+  <!-- ======= Doctors Section ======= -->
+  <section id="doctors" class="doctors">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Find a Doctor</h2>
+        <br/>
+        <div class="search-container">
+        <form method="get" id="search-filter" href="#doctors">
+          {% csrf_token %}
+            <div class="search-box">
+              <input type="text" class="search" placeholder="Search clinics" name="search-clinic">
+              <hr width="4" size="20" />
+              <input type="text" class="filter-location" placeholder="Location" name="filter-location">
+              <hr width="4" size="20" />
+              <input type="text" class="filter-speciality" placeholder="Speciality" name="filter-speciality">
+              <button type="submit" class="button-filter" name="search-filter-button" form="search-filter">Search</button>
+              <button type="reset" class="button-reset" name="filter-reset-button" form="search-filter">Reset</button>
+            </div>
+         </form>
+         </div>
+      </div>
+
+      {% for filter_clinic_idd, filter_imag, filter_docto, filter_clini, filter_specialit, filter_locatio in clinic_list %}
+      <div class="row">
+
+        <div class="col-lg-12 mt-4">
+          <div class="member d-flex align-items-start">
+            <div class="pic"><a href="#appointment"><img id="{{ forloop.counter }}" src="{{filter_imag}}" class="img-fluid" alt="" onclick="document.getElementById('sel_doctor').value='{{ filter_docto }}'; doc(this.id)"></a></div>
+            <div class="member-info">
+              <h4>{{filter_docto}}</h4>
+              <span>{{filter_clini}}</span>
+              <p>Specialities: {{filter_specialit}} <br> Location: {{filter_locatio}}</p>
+              <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="doctor_id" value="{{filter_clinic_idd}}" />
+                <div class="social">
+                  {% if request.session.uid %}
+                  <a onclick="document.getElementById('sel_doctor').value='{{filter_docto}}'; doc('{{ forloop.counter }}')" href="#appointment" class="appointment-btn scrollto">📅</a>
+                    <a href="{% url 'view_doctor_profile' doctor_id=filter_clinic_idd %}">⭐</a>
+                  {% else %}
+                    <a href="{% url 'login' %}" onclick="return confirm_alert(this);">📅</a>
+                    <a href="{% url 'login' %}" onclick="return confirm_alert(this);">⭐</a>
+                  {% endif %}
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      {% if not df_combined is None %}
+        {% for i, row in df_combined.iterrows %}
+            <div class="col-lg-12 mt-4">
+              <div class="member d-flex align-items-start">
+                <div class="pic"><img src="{{row.1}}" class="img-fluid" alt=""> </div>
+                <div class="member-info">
+                  <h4>{{row.2}}</h4>
+                  <span> {{row.3}}</span>
+                  <p>Specialities:  {{row.4}} <br> Location: {{row.5}} </p>
+                  <div class="social">
+                    {% if request.session.uid %}
+                    <a onclick="document.getElementById('sel_doctor').value='{{row.2}}'; doc('{{ forloop.counter }}')" href="#appointment" class="appointment-btn scrollto">📅</a>
+                      <a href="{% url 'view_doctor_profile' doctor_id=filter_clinic_idd %}">⭐</a>
+                    {% else %}
+                      <a href="{% url 'login' %}" onclick="return confirm_alert(this);">📅</a>
+                      <a href="{% url 'login' %}" onclick="return confirm_alert(this);">⭐</a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <h4>No result found...</h4>
+        {% endif %}
+      </div>
+
+    </div>
+  </section><!-- End Doctors Section -->
+
+
+
+<!-- ======= Appointment Section ======= -->
+<section id="appointment" class="appointment section-bg">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Make an Appointment</h2>
+      <p>Pick your preferred doctor to have the most comfortable visit to the clinic</p>
+      <div class="row">
+        <div class="col" style="padding: 20px 0">
+          <div id="doc-pic" class="doc-pic"><a href="#doctors"><h5>Select your doctor</h5></a></div>
+        </div>
+      </div>
+    </div>
+
+    <form method="post" wqclass="php-email-form">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-4 form-group">
+          <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+          <div class="validate"></div>
+        </div>
+        <div class="col-md-4 form-group mt-3 mt-md-0">
+          <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">
+          <div class="validate"></div>
+        </div>
+        <div class="col-md-4 form-group mt-3 mt-md-0">
+          <input type="tel" class="form-control" name="phone" id="phone" placeholder="Your Phone" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+          <div class="validate"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 form-group mt-3">
+          <input type="datetime" name="date" class="form-control datepicker" id="date" placeholder="Appointment Date" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+          <div class="validate"></div>
+        </div>
+        <div class="col-md-8 form-group mt-3">
+          <select name="doctor" id="sel_doctor" class="form-select">
+            <option value="">Select Doctor</option>
+            {% for filter_docto in doc_option %}
+            <option value="{{filter_docto}}">{{filter_docto}}</option>
+            {% endfor %}
+
+            {% if not df_combined is None %}     
+            {% for i, row in df_combined.iterrows %}
+            <option value="{{row.2}}">{{row.2}}</option>
+            {% endfor %}
+            {% else %}
+            {% endif %}
+
+          </select>
+          <div class="validate"></div>
+        </div>
+      </div>
+
+      <div class="form-group mt-3">
+        <textarea class="form-control" name="message" rows="5" placeholder="Message (Optional)"></textarea>
+        <div class="validate"></div>
+      </div>
+      <div class="mb-3">
+        <div class="loading">Loading</div>
+        <div class="error-message"></div>
+        <div class="sent-message">Your appointment request has been sent successfully. Thank you!</div>
+      </div>
+      <div class="text-center"><button name="btnAppointment" type="submit" value="btnAppointment">Make an Appointment</button></div>
+    </form>
+
+  </div>
+</section><!-- End Appointment Section -->
+
+
+
+
+  <!-- ======= Frequently Asked Questions Section ======= -->
+  <section id="faq" class="faq section-bg">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Frequently Asked Questions</h2>
+        <!-- <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p> -->
+      </div>
+
+      <div class="faq-list">
+
+        <ul>
+          {% for faquestio, faqanswe in faq_list %}
+          <li data-aos="fade-up">
+            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-{{ forloop.counter }}">{{faquestio}}  <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-{{ forloop.counter }}" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                {{faqanswe}}
+              </p>
+            </div>
+          </li>
+
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+  </section><!-- End Frequently Asked Questions Section -->
+</main>
+<!-- End #main -->
+
+
+
+<div id="preloader"></div>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="{% static 'vendor/purecounter/purecounter.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+<script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+<!-- Template Main JS File -->
+<script src="{% static 'js/main.js' %}"></script>
+<script>
+  function doc(idd)
+    {
+      var docImg = document.getElementById(idd).outerHTML;
+      document.getElementById("doc-pic").getElementsByTagName('a')[0].innerHTML = docImg;
+    }
+</script>
+
+<!-- flatpickr (Date time picker) -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  conf = {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    minDate: "today",
+    altInput: true,
+    altFormat: "F j, Y (h:S K)"
+  }
+  flatpickr("input[type=datetime]", conf);
+</script>
+
+<script type="text/javascript">
+  function confirm_alert(node) {
+      return confirm("Please login to proceed.");
+  }
+</script>
+{% endblock content %}
+
+
+

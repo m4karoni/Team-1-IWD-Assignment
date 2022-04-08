@@ -1,0 +1,161 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container emp-profile">
+  <form method="post">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-4">
+        <div class="profile-img">
+          <img src={{profile_pic_url}} id="display" width="200" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="profile-head">
+          {% if username == "" %}
+          <h3>
+            (Username not set)
+          </h3>
+          {% else %}
+          <h3>
+            {{username}}
+          </h3>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="profile-edit-btn" name="btnAddMore">Update Profile</button>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="profile-work">
+          <h5 style="font-weight: bold;">Date of Birth</h5>
+          {% if dob == "" %}
+          <p style="color:black; font-size: 12px;">
+            (Not Set)
+          </p>
+          {% else %}
+          <p style="color:black; font-size: 12px;">
+            {{dob}}
+          </p>
+          {% endif %}
+        </div>
+        <div class="profile-work">
+          <h5 style="font-weight: bold;">Gender</h5>
+          {% if gender == "" %}
+          <p style="color:black; font-size: 12px;">
+            (Not Set)
+          </p>
+          {% else %}
+          <p style="color:black; font-size: 12px;">
+            {{gender}}
+          </p>
+          {% endif %}
+        </div>
+        <div class="profile-work">
+          <h5 style="font-weight: bold;">Height (cm)</h5>
+          {% if height_cm == "" %}
+          <p style="color:black; font-size: 12px;">
+            (Not Set)
+          </p>
+          {% else %}
+          <p style="color:black; font-size: 12px;">
+            {{height_cm}}
+          </p>
+          {% endif %}
+        </div>
+        <div class="profile-work">
+          <h5 style="font-weight: bold;">Weight</h5>
+          {% if weight_kg == "" %}
+          <p style="color:black; font-size: 12px;">
+            (Not Set)
+          </p>
+          {% else %}
+          <p style="color:black; font-size: 12px;">
+            {{weight_kg}}
+          </p>
+          {% endif %}
+        </div>
+        <div class="profile-work">
+          <h5 style="font-weight: bold;">Blood Type</h5>
+          {% if blood_type == "" %}
+          <p style="color:black; font-size: 12px;">
+            (Not Set)
+          </p>
+          {% else %}
+          <p style="color:black; font-size: 12px;">
+            {{blood_type}}
+          </p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-md-8">
+
+
+        <section id="details">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="details-tab">
+            <h3>Details</h3>
+            <div class="row">
+              <div class="col-md-6">
+                <label>User Id</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{user_id}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Name</label>
+              </div>
+              <div class="col-md-6">
+                {% if username == "" %}
+                <p>
+                  (Not Set)
+                </p>
+                {% else %}
+                <p>
+                  {{username}}
+                </p>
+                {% endif %}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Email</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{email}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Medical History</label>
+              </div>
+              <div class="col-md-6">
+                {% if medical_history == "" %}
+                <p>
+                  (Not Set)
+                </p>
+                {% else %}
+                <p>
+                  {{medical_history}}
+                </p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+      </div>
+    </div>
+  </form>
+</div>
+
+
+{% endblock content %}

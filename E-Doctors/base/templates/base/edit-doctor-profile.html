@@ -1,0 +1,298 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- <div class="container emp-profile">
+  <div class="col-md-2">
+    <a style="text-align: left; font-size: 18px; color: black;" name="btnBack" href="{% url 'doctor_profile' %}">⬅ Back</a>
+  </div>
+  <br>
+  <h2>Edit Profile</h2>
+      <form method="post">
+        {% csrf_token %}
+          <input
+            type="text"
+            name="email"
+            required="true"
+            autofocus="true"
+            placeholder="Email"
+            value = "123"
+          />
+      </form>
+</div> -->
+
+<div class="edit_container">
+  <div class="col-md-2">
+    <a style="text-align: left; font-size: 24px; color: white;" name="btnBack" href="{% url 'doctor_profile' %}">⬅ Profile Page</a>
+  </div>
+<div class="row gutters">
+<div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+<div class="card h-100">
+	<div class="card-body">
+		<div class="account-settings">
+			<div class="user-profile">
+				<div class="user-avatar">
+            <img src={{profile_pic_url}} id="display" width="200" />
+				</div>
+        <!-- <input type="file"accept="image/*" name="profile_pic" id="file"  onchange="loadFile(event)" style="display: none;"/>
+        <label for="file" style="cursor: pointer; color:blue; text-decoration: underline; font-size:10px;">Update Profile Picture</label> -->
+
+        {% if username == "" %}
+          <h5>
+            (Username not set)
+          </h5>
+        {% else %}
+          <h5>
+            {{username}}
+          </h5>
+        {% endif %}
+				<h6 class="user-email">{{email}}</h6>
+			</div>
+			<div>
+				<h5>About</h5>
+        {% if about_me == "" %}
+          <p>
+            (Not Set)
+          </p>
+        {% else %}
+          <p>
+            {{about_me}}
+          </p>
+        {% endif %}
+			</div>
+      <div>
+        <h5>Speciality</h5>
+        {% if speciality == "" %}
+          <p>
+            (Not Set)
+          </p>
+        {% else %}
+          <p>
+            {{speciality}}
+          </p>
+        {% endif %}
+      </div>
+      <div>
+        <h5>Clinic Name</h5>
+        {% if clinic_name == "" %}
+          <p>
+            (Not Set)
+          </p>
+        {% else %}
+          <p>
+            {{clinic_name}}
+          </p>
+        {% endif %}
+      </div>
+      <div>
+        <h5>Clinic Address</h5>
+        {% if clinic_address == "" %}
+          <p>
+            (Not Set)
+          </p>
+        {% else %}
+          <p>
+            {{clinic_address}}
+          </p>
+        {% endif %}
+      </div>
+      <div>
+        <h5>Clinic Location</h5>
+        {% if clinic_location == "" %}
+          <p>
+            (Not Set)
+          </p>
+        {% else %}
+          <p>
+            {{clinic_location}}
+          </p>
+        {% endif %}
+      </div>
+      <div>
+        <h5>Clinic Visit Per Hour</h5>
+        {% if clinic_visit_hourly_rate == 0 %}
+          <p>
+            (Not Set)
+          </p>
+        {% else %}
+          <p>
+            {{clinic_visit_hourly_rate}}
+          </p>
+        {% endif %}
+      </div>
+      <div>
+        <h5>Home Visit Per Hour</h5>
+        {% if home_visit_hourly_rate == 0 %}
+          <p>
+            (Not Set)
+          </p>
+        {% else %}
+          <p>
+            {{home_visit_hourly_rate}}
+          </p>
+        {% endif %}
+      </div>
+		</div>
+	</div>
+</div>
+</div>
+<div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
+<div class="card h-100">
+	<div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+  		<div class="row gutters">
+  			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-bottom:20px;">
+  				<h6 class="mb-2 text-primary" style="font-size: 24px;">Update Details</h6>
+  			</div>
+        <br>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-bottom:20px">
+  				<div class="form-group">
+            <div class="user-avatar">
+              <img src={{profile_pic_url}} id="output" width="200" />
+    				</div>
+            <input type="file"accept="image/*" name="profile_pic" id="file"  onchange="loadFile(event)" style="display: none;"/>
+            <label for="file" style="cursor: pointer; color:blue; text-decoration: underline; font-size:10px;">Update Profile Picture</label>
+  				</div>
+  			</div>
+        <br>
+  			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+  				<div class="form-group">
+  					<label for="fullName">Full Name</label>
+            {% if not username == "" %}
+              <input type="text" class="form-control" name="fullName" placeholder="Enter Full Name" value="{{username}}">
+            {% else %}
+              <input type="text" class="form-control" name="fullName" placeholder="Enter Full Name">
+            {% endif %}
+  				</div>
+  			</div>
+        <br>
+  			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+  				<div class="form-group">
+  					<label for="speciality">Speciality</label>
+            {% if not speciality == "" %}
+              <input type="text" class="form-control" name="speciality" placeholder="Enter Speciality" value="{{speciality}}">
+            {% else %}
+              <input type="text" class="form-control" name="speciality" placeholder="Enter Speciality">
+            {% endif %}
+  				</div>
+  			</div>
+  			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+  				<div class="form-group">
+  					<label for="about">About</label>
+            {% if not about_me == "" %}
+              <input type="text" class="form-control" name="about" placeholder="Enter About" value="{{about}}">
+            {% else %}
+              <input type="text" class="form-control" name="about" placeholder="Enter About">
+            {% endif %}
+  				</div>
+  			</div>
+  			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+  				<div class="form-group">
+  					<label for="clinic_name">Clinic Name</label>
+            {% if not clinic_name == "" %}
+              <input type="text" class="form-control" name="clinic_name" placeholder="Enter Clinic Name" value="{{clinic_name}}">
+            {% else %}
+              <input type="text" class="form-control" name="clinic_name" placeholder="Enter Clinic Name">
+            {% endif %}
+  				</div>
+  			</div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+          <div class="form-group">
+            <label for="clinic_address">Clinic Address</label>
+            {% if not clinic_address == "" %}
+              <input type="text" class="form-control" name="clinic_address" placeholder="Enter Clinic Address" value="{{clinic_address}}">
+            {% else %}
+              <input type="text" class="form-control" name="clinic_address" placeholder="Enter Clinic Address">
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+          <div class="form-group">
+            <label for="clinic_location">Clinic Location</label>
+            {% if not clinic_location == "" %}
+              <input type="text" class="form-control" name="clinic_location" placeholder="Enter Clinic Address" value="{{clinic_location}}">
+            {% else %}
+              <input type="text" class="form-control" name="clinic_location" placeholder="Enter Clinic Address">
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+          <div class="form-group">
+            <label for="clinic_visit_hourly_rate">Clinic Visit Rate (Per hour)</label>
+              <input type="number" class="form-control" name="clinic_visit_hourly_rate" placeholder="Enter Clinic Visit Rate (RM)" value="{{clinic_visit_hourly_rate}}">
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+          <div class="form-group">
+            <label for="home_visit_hourly_rate">Home Visit Rate (Per hour)</label>
+              <input type="number" class="form-control" name="home_visit_hourly_rate" placeholder="Enter Hone Visit Rate (RM)" value="{{home_visit_hourly_rate}}">
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom:20px">
+          <div class="form-group">
+            <label for="password">Enter Password</label>
+            <input type="password" class="form-control" name="password" placeholder="Enter Password">
+          </div>
+        </div>
+  		</div>
+  		<div class="row gutters">
+  			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-bottom:20px">
+  				<div class="text-center">
+  					<button type="submit" name="btnUpdate"  class="button-edit-doctor-profile btn" style="display: flex; text-align: center;">Update Info</button>
+  				</div>
+  			</div>
+  		</div>
+    </form>
+	</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+
+  var loadFile = function(event) {
+  	var image = document.getElementById('output');
+  	image.src = URL.createObjectURL(event.target.files[0]);
+  };
+
+  // var config = {
+  //   apiKey: "AIzaSyDIDHyLXDArAIIT29h0IwE7ipWy5pn2ZcQ",
+  //   authDomain: "e-doctors-ffa02.firebaseapp.com",
+  //   databaseURL: "https://e-doctors-ffa02-default-rtdb.firebaseio.com",
+  //   projectId: "e-doctors-ffa02",
+  //   storageBucket: "e-doctors-ffa02.appspot.com",
+  //   messagingSenderId: "9903158176",
+  //   appId: "1:9903158176:web:f521117415e536e3382ac5",
+  // };
+  //
+  // firebase.initializeApp(config);
+  //
+  // function uploadImage(){
+  //   var uid = {{user_id}}
+  //   var storage = firebase.storage();
+  //   var file = document.getElementById('output').files[0];
+  //   var storageRef = storage.ref();
+  //   var thisref = storageRef.child('doctors').child(uid).child(file.name).put(file);
+  //
+  //   thisref.on('state_changed', function(snapshot){
+  //     console.log("File uploaded successfully");
+  //   },
+  //   function(error){
+  //     console.log('Error',error);
+  //   },
+  //   function(){
+  //     thisref.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+  //     console.log('File available at', downloadURL);
+  //     document.getElementById("url").value=downloadURL;
+  //     alert('uploaded successfully');
+  //   });
+  // });
+  // };
+
+</script>
+
+{% endblock content %}

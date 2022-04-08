@@ -1,0 +1,89 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+<div>
+  <div class="login-signup-container">
+    <div class="login-signup-inner-container">
+      <h1 class="login-signup-title-container">Login To Your Account</h1>
+      <div class="login-signup-form-container">
+        <form class="login-signup-form" action="" method="POST">
+          {% csrf_token %}
+          <input
+            type="text"
+            name="email"
+            required="true"
+            autofocus="true"
+            placeholder="Email"
+            class="email-input input"
+          />
+
+          <input
+            type="password"
+            name="password"
+            required="true"
+            autofocus="true"
+            placeholder="Password"
+            class = "password-input"
+          />
+          <div class="remember-me-container">
+            <input
+              type="checkbox"
+              checked="true"
+              class="remember-me-checkbox"
+            />
+            <span class="remember-me-text">Remember me</span>
+            <a
+              href="https://example.com"
+              target="_blank"
+              rel="noreferrer noopener"
+              class="forgot-password-link"
+            >
+              Forgot Password
+            </a>
+          </div>
+          <button type="submit" class="first-button button" value="login">Login</button>
+        </form>
+
+        <div class="not-registered-yet-container">
+          <span class="not-registered-yet">
+            Not Registered Yet?
+          </span>
+          <a href="{% url 'sign_up' %}" class="sign-up-link">
+            Sign-up
+          </a>
+        </div>
+        <!-- <div class="login-as-doctor-container">
+          <span class="login-as-a-doctor">
+            Login as a Doctor?
+          </span>
+          <a href="/doctor-login.html" class="login-here-link">
+            Login Here
+          </a>
+        </div> -->
+      </div>
+        <!-- Error message -->
+        <div class="login-as-a-doctor">
+          {% if messages %}
+              {% for message in messages %}
+                <script>
+                  confirm_alert(this, "{{message}}")
+                </script>
+              <!-- <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> -->
+              {% endfor %}
+          {% endif %}
+        </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function confirm_alert(node, msg) {
+      return confirm(msg);
+  }
+</script>
+
+{% endblock content %}

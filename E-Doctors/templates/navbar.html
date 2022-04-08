@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>👨‍⚕️ E-DOCTORS</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <!-- <link href="{% static 'images/favicon.png' %}" rel="icon">
+  <link href="{% static 'images/apple-touch-icon.png' %}" rel="apple-touch-icon"> -->
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/fontawesome-free/css/font-awesome.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'styles/style.css' %}" rel="stylesheet" type='text/css' media='screen'>
+
+  <!-- Time picker -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+  <!-- flatpickr (Date time picker) -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    conf = {
+      enableTime: true,
+      dateFormat: "Y-m-d H:i",
+      minDate: "today",
+      altInput: true,
+      altFormat: "F j, Y (h:S K)"
+    }
+    flatpickr("input[type=datetime]", conf);
+  </script>
+
+<!-- flatpickr (Date time picker) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+  <!-- =======================================================
+  * Template Name: Medilab - v4.7.1
+  * Template URL: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class={{navbar_class}}>
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo me-auto"><a href="templates/index.html">E-DOCTORS</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      {% url 'doctor_profile' as url %}
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#counts">Stats</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#doctors">Doctors</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#appointment">Make an Appointment</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#faq">FAQ</a></li>
+          <li><a class="nav-item nav-link" href="{% url 'blogs' %}#">Blogs</a></li>
+          {% if request.session.uid %}
+            {% if request.session.user_type == 'doctor' %}
+              <li><a class="nav-link scrollto {% if request.path  == url %}active{% endif %}" href="{% url 'doctor_profile' %}">Profile</a></li>
+            {% else %}
+              <li><a class="nav-link scrollto {% if request.path  == url %}active{% endif %}" href="{% url 'patient_profile' %}">Profile</a></li>
+            {% endif %}
+          {% endif %}
+        </ul>
+        <!-- <i class="bi bi-list mobile-nav-toggle"></i> -->
+      </nav><!-- .navbar -->
+
+      {% if request.session.uid %}
+        <a href="{% url 'logout' %}" class="appointment-btn scrollto">Logout</a>
+      {% else %}
+        <a href="{% url 'login' %}" class="appointment-btn scrollto">Login</a>
+      {% endif %}
+
+    </div>
+  </header><!-- End Header -->
+
+
+  {% block content%}
+
+  {% endblock %}
+</body>
+

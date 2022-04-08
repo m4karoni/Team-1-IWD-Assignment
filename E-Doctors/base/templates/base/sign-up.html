@@ -1,0 +1,68 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+<div>
+  <div class="login-signup-container">
+    <div class="login-signup-inner-container">
+      <h1 class="login-signup-title-container">Sign-Up An Account</h1>
+      <div class="login-signup-form-container">
+        <form class="login-signup-form" action="" method="POST">
+          {% csrf_token %}
+          <input
+            type="text"
+            name="email"
+            required="true"
+            autofocus="true"
+            placeholder="Email"
+            class="email-input input"
+          />
+
+          <input
+            type="password"
+            name="password"
+            required="true"
+            autofocus="true"
+            placeholder="Password"
+            class = "password-input"
+          />
+          <button type="submit" class="first-button button" name="patient-sign-up" >Sign-Up As A Patient</button>
+          <button type="submit" class="doctor-button button" name="doctor-sign-up" >Sign-Up As A Doctor</button>
+        </form>
+
+
+        <div class="already-have-an-account-container">
+          <span class="already-have-an-account">
+            Already have an Account?
+          </span>
+          <a href="{% url 'login' %}" class="login-link">
+            Login
+          </a>
+        </div>
+        <!-- <div class="login-as-doctor-container">
+          <span class="login-as-a-doctor">
+            Login as a Doctor?
+          </span>
+          <a href="/doctor-login.html" class="login-here-link">
+            Login Here
+          </a>
+        </div> -->
+      </div>
+        <!-- Error message -->
+        <div class="login-as-a-doctor">
+          {% if messages %}
+          <ul class="messages">
+              {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+              {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
