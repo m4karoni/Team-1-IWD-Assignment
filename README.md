@@ -1,10 +1,10 @@
 # Team 1 IWD Project
 
-> ### Team mate:
-> ### Thean Jun Chao 0127122
-> ### Loo Jia Wen 0129868
-> ### Tamelselvam A/L Anna Durai
-> ### Tan Nuo 0129398
+### Team mate:
+### Thean Jun Chao 0127122
+### Loo Jia Wen 0129868
+### Tamelselvam A/L Anna Durai
+### Tan Nuo 0129398
 
 
 This project presents a system about a clinic's site  
