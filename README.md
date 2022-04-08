@@ -6,9 +6,10 @@
 ### Tamelselvam A/L Anna Durai 0128536
 ### Tan Nuo 0129398
 
-  
+<hr>
 **This project presents a system about a clinic's site**  
-
+<hr>  
+  
 ## Brief introduction
 A web application which enable patients and doctors to communicate and seek help, this project aims to help people in need with social distancing in mind, where during this pandemic, not everyone is able to go seek a doctor especially those who tested positive for the infection of Covid-19 virus and needed help. This site provides help to those who need by visiting the patient's location and treat them professionally.  
 
